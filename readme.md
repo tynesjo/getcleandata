@@ -27,4 +27,4 @@ Functions
 There are three functions in the script:
 * DataGetunzip, which downloads and unzips the source data in a new folder
 * ReadT, which reads a .txt comma-delimited file given subfolder and file name with parameters suitable for this data set, and
-* TidyCreat, which creates a tidy version of the data set and saves it to a comma delimited file called tidy_data.txt
+* TidyCreate, which creates a tidy version of the data set and saves it to a comma delimited file called tidy_data.txt

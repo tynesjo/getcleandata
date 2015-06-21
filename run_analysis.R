@@ -61,7 +61,6 @@ d <- cbind(  # Combine the data into one data frame.
 # ------------------------------------------------------------------------------
 d %<>% {.[, c(1:2, grep("mean\\(|std", colnames(.)))]}
 
-
 # Step 3: Appropriately label the activities using factors.
 # ------------------------------------------------------------------------------
 activity_factors <- ReadT(".", "activity_labels")
@@ -75,6 +74,8 @@ v <- colnames_dictionary
 for(i in 1:length(v)) {
   colnames(d) %<>% gsub(names(v)[[i]], v[[i]] %>% unname, .)
 }
+# Clean up the column names.
+{colnames(d) %<>% gsub("-", "_", .) %>% gsub("\\(\\)", "", .)}
 rm(v)
 
 
@@ -83,7 +84,6 @@ rm(v)
 
 TidyCreate <- . %>% {  # Creates a tidy data set from "d" and saves as CSV file.
   aggregate(. ~ activity + subject, d, mean) %>%
-  {.[order(.$subject, .$activity),]} %T>%
-  {colnames(.) %<>% gsub("-", "_", .) %>% gsub("\\(\\)", "", .)} %>%
+  {.[order(.$subject, .$activity),]} %>%
   write.table("tidy_data.txt", row.names=F)
 }
